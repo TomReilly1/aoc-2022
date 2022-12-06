@@ -1,5 +1,6 @@
 from math import floor
 
+
 def generate_priority_dict() -> dict:
     l_dict = dict()
 
@@ -19,20 +20,24 @@ def main() -> None:
 
     with open('input.txt', 'r') as f:
         lines = f.readlines()
+        curr_group = []
 
-        for line in lines:
-            line_length = len(line) - 1  # subtract newline character '\n' from each line 
-            mid = floor(line_length / 2)
-            
-            comp_one = line[:mid]
-            comp_two = line[mid:]
+        for index, line in enumerate(lines):
+            curr_group.append(line[:-1])
 
-            for char in comp_one:
-                if char in comp_two:
-                    total_points += priority_dict[char]
-                    break
+            if (index + 1) % 3 == 0:
+                group_badge = None
 
+                for char in curr_group[0]:
+                    if char in curr_group[1] and char in curr_group[2]:
+                        group_badge = char
+
+                total_points += priority_dict[group_badge]
+
+                curr_group.clear()                
+                                
     print('\nFinal Total Points:', total_points)
+
 
 if __name__ == '__main__':
     main()
