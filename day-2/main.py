@@ -2,33 +2,19 @@ def main() -> None:
     opp_choices = {
         'A': {
             'name': 'rock',
-            'wins_against': 'scissors'
+            'wins_over': 'scissors',
+            'loses_to': 'paper'
         },
         'B': {
             'name': 'paper',
-            'wins_against': 'rock'
+            'wins_over': 'rock',
+            'loses_to': 'scissors'
         },
         'C': {
             'name': 'scissors',
-            'wins_against': 'paper'
-        },
-    }
-    plyr_choices = {
-        'X': {
-            'name': 'rock',
-            'wins_against': 'scissors',
-            'points': 1
-        },
-        'Y': {
-            'name': 'paper',
-            'wins_against': 'rock',
-            'points': 2
-        },
-        'Z': {
-            'name': 'scissors',
-            'wins_against': 'paper',
-            'points': 3
-        },
+            'wins_over': 'paper',
+            'loses_to': 'rock'
+        }
     }
 
     points_total = 0
@@ -38,14 +24,36 @@ def main() -> None:
 
         for line in lines:
             opp_choice = line[0]
-            plyr_choice = line[2]
+            outcome = line[2]
 
-            points_total += plyr_choices[plyr_choice]['points']
+            plyr_choice = None
+            points_from_round = 0
 
-            if plyr_choices[plyr_choice]['wins_against'] == opp_choices[opp_choice]['name']:
-                points_total += 6
-            elif plyr_choices[plyr_choice]['name'] == opp_choices[opp_choice]['name']:
-                points_total += 3
+            match outcome:
+                case 'X': # lose
+                    plyr_choice = opp_choices[opp_choice]['wins_over']
+                    pass
+                case 'Y': # draw
+                    plyr_choice = opp_choices[opp_choice]['name']
+                    points_from_round += 3
+                case 'Z': # win
+                    plyr_choice = opp_choices[opp_choice]['loses_to']
+                    points_from_round += 6
+                case _:
+                    raise Exception('Did not match outcome character')
+            
+            match plyr_choice:
+                case 'rock':
+                    points_from_round += 1
+                case 'paper':
+                    points_from_round += 2
+                case 'scissors':
+                    points_from_round += 3
+                case _:
+                    raise Exception('Did not match player choice string')
+
+            points_total += points_from_round
+
 
     print(points_total)
 
