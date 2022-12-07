@@ -1,4 +1,4 @@
-def p1_generate_stacks() -> dict:
+def generate_stacks() -> dict:
     stacks_dict = dict()
     num_of_stacks = 0
 
@@ -26,7 +26,7 @@ def p1_generate_stacks() -> dict:
     return stacks_dict
 
 
-def p1_sort_stacks(stacks: dict) -> dict:
+def sort_stacks(stacks: dict) -> dict:
     sorted_stacks = stacks.copy()
 
     with open('input.txt', 'r') as f:
@@ -50,8 +50,8 @@ def p1_sort_stacks(stacks: dict) -> dict:
     return sorted_stacks
 
 
-def part_1() -> None:
-    sorted_stacks = p1_sort_stacks(p1_generate_stacks())
+def main() -> None:
+    sorted_stacks = sort_stacks(generate_stacks())
     final_msg = ''
 
     for stack in sorted_stacks:
@@ -62,4 +62,4 @@ def part_1() -> None:
 
 
 if __name__ == '__main__':
-    part_1()
+    main()
