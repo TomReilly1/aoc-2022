@@ -9,8 +9,10 @@ def main() -> None:
             assign_one = list(map(int, assignments[0].split('-')))
             assign_two = list(map(int, assignments[1].split('-')))
 
-            if (assign_one[0] <= assign_two[0] and assign_one[1] >= assign_two[1] or
-                assign_one[0] >= assign_two[0] and assign_one[1] <= assign_two[1]):
+            if (assign_one[1] >= assign_two[0] and assign_one[1] <= assign_two[1] or # asn-1's min is between asn-2's min and max
+                assign_one[0] >= assign_two[0] and assign_one[0] <= assign_two[1] or # asn-1's max is between asn-2's min and max
+                assign_two[1] >= assign_one[0] and assign_two[1] <= assign_one[1] or # asn-2's min is between asn-1's min and max
+                assign_two[0] >= assign_one[0] and assign_two[0] <= assign_one[1]):  # asn-2's max is between asn-1's min and max
                 total_overlaps += 1
 
     print('\nFinal Total overlaps:', total_overlaps)
